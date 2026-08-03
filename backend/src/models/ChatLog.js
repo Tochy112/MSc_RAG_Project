@@ -14,6 +14,7 @@ const retrievedChunkSchema = new mongoose.Schema(
 
 const chatLogSchema = new mongoose.Schema(
   {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     query: { type: String, required: true },
     answer: { type: String, required: true },
     retrievedChunks: [retrievedChunkSchema],
@@ -28,5 +29,7 @@ const chatLogSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+chatLogSchema.index({ user: 1, createdAt: -1 });
 
 export const ChatLogModel = mongoose.model("ChatLog", chatLogSchema);

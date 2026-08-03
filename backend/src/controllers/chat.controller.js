@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { hybridRetrieve } from "../services/retrieval.service.js";
 import { generateAnswer } from "../services/llm.service.js";
 import { ChatLogModel } from "../models/ChatLog.js";
@@ -15,18 +16,25 @@ export async function askQuestion(req, res) {
     if (retrievedChunks.length === 0) {
       const answer =
         "I couldn't find anything in the knowledge base relevant to that question yet. Try uploading a document that covers it, or rephrase the question.";
-      await ChatLogModel.create({
+      const chatLog = await ChatLogModel.create({
+        user: req.user.id,
         query,
         answer,
         retrievedChunks: [],
         latencyMs: Date.now() - startedAt,
       });
-      return res.json({ answer, sources: [] });
+      return res.json({
+        answer,
+        sources: [],
+        chatLogId: chatLog._id,
+        latencyMs: chatLog.latencyMs,
+      });
     }
 
     const answer = await generateAnswer(query, retrievedChunks);
 
     const chatLog = await ChatLogModel.create({
+      user: req.user.id,
       query,
       answer,
       retrievedChunks: retrievedChunks.map((c) => ({
@@ -59,6 +67,26 @@ export async function askQuestion(req, res) {
 }
 
 export async function listChatHistory(req, res) {
-  const logs = await ChatLogModel.find({}).sort({ createdAt: -1 }).limit(100).lean();
-  res.json(logs);
+  try {
+    const userId = req.params.userId || req.query.userId || req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Valid userId is required" });
+    }
+
+    if (req.user.role !== "admin" && String(req.user.id) !== String(userId)) {
+      return res.status(403).json({ error: "You can only view your own chat history" });
+    }
+
+    const logs = await ChatLogModel.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(100)
+      .populate("user", "username role")
+      .lean();
+
+    res.json(logs);
+  } catch (err) {
+    console.error("[listChatHistory]", err);
+    res.status(500).json({ error: "Unable to read chat history" });
+  }
 }

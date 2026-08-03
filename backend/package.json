@@ -1,5 +1,5 @@
 {
-  "name": "lunozart-rag-backend",
+  "name": "tochy-rag-backend",
   "version": "1.0.0",
   "description": "Hybrid retrieval RAG backend (BM25 + Qdrant + RRF + Gemini)",
   "type": "module",
