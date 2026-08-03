@@ -1,0 +1,67 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: tochy-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: tochy-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: tochy-backend
+    depends_on:
+      - mongodb
+      - qdrant
+    ports:
+      - "4000:4000"
+    volumes:
+      # Bind-mount source only (node_modules stays the one built into the image)
+      - ./backend/src:/app/src
+      - ./backend/package.json:/app/package.json
+    command: npm run dev
+    environment:
+      - PORT=4000
+      - MONGO_URI=mongodb://mongodb:27017/tochy_rag
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_COLLECTION=${QDRANT_COLLECTION:-tochy_chunks}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_CHAT_MODEL=${GEMINI_CHAT_MODEL:-gemini-1.5-flash}
+      - GEMINI_EMBEDDING_MODEL=${GEMINI_EMBEDDING_MODEL:-text-embedding-004}
+      - CHUNK_SIZE=${CHUNK_SIZE:-800}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-120}
+      - TOP_K_DENSE=${TOP_K_DENSE:-8}
+      - TOP_K_BM25=${TOP_K_BM25:-8}
+      - TOP_K_FUSED=${TOP_K_FUSED:-5}
+      - RRF_K=${RRF_K:-60}
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: tochy-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.js:/app/vite.config.js
+    environment:
+      - VITE_BACKEND_URL=http://backend:4000
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+  qdrant_data:
