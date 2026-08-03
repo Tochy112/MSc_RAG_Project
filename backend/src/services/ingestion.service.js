@@ -6,11 +6,11 @@ import { embedText } from "./llm.service.js";
 import { upsertVector } from "./vectorStore.service.js";
 import { bm25Index } from "./bm25.service.js";
 
-/**
- * Full ingestion pipeline for one uploaded document:
- * Document text -> recursive chunking -> per-chunk embedding ->
- * Qdrant upsert -> Mongo chunk record -> BM25 index update.
- */
+/*
+ Full ingestion pipeline for one uploaded document:
+ Document text -> recursive chunking -> per-chunk embedding ->
+ Qdrant upsert -> Mongo chunk record -> BM25 index update.
+*/
 export async function ingestDocument({ title, category, rawText, sourceFilename }) {
   const document = await DocumentModel.create({
     title,
@@ -55,10 +55,10 @@ export async function ingestDocument({ title, category, rawText, sourceFilename 
   return { document, chunkCount: chunkDocs.length };
 }
 
-/**
- * Rebuilds the in-memory BM25 index from every chunk stored in MongoDB.
- * Called once on server startup so BM25 search works immediately after a
- * restart without re-embedding anything.
+/*
+ Rebuilds the in-memory BM25 index from every chunk stored in MongoDB.
+ Called once on server startup so BM25 search works immediately after a
+ restart without re-embedding anything.
  */
 export async function rebuildBM25FromMongo() {
   bm25Index.reset();

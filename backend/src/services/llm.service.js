@@ -3,11 +3,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 const CHAT_MODEL = process.env.GEMINI_CHAT_MODEL || "gemini-1.5-flash";
-const EMBEDDING_MODEL = process.env.GEMINI_EMBEDDING_MODEL || "text-embedding-004";
+const EMBEDDING_MODEL =
+  process.env.GEMINI_EMBEDDING_MODEL || "text-embedding-001";
 
-/**
- * Embeds a single piece of text into a dense vector using Gemini's
- * text-embedding-004 model (768 dimensions).
+/*
+  Embeds a single piece of text into a dense vector using Gemini's
+  text-embedding-001 model (3,072 dimensions).
  */
 export async function embedText(text) {
   const model = genAI.getGenerativeModel({ model: EMBEDDING_MODEL });
@@ -15,10 +16,11 @@ export async function embedText(text) {
   return result.embedding.values;
 }
 
-/**
- * Embeds many chunks. Done sequentially in small batches to stay well
- * within free-tier rate limits; swap for embedBatch API if you upgrade.
- */
+/*
+  Embeds many chunks. Done sequentially in small batches to stay well
+  within free-tier rate limits. 
+  Swap for embedBatch API after upgrade.
+*/
 export async function embedTexts(texts) {
   const vectors = [];
   for (const text of texts) {
@@ -28,18 +30,16 @@ export async function embedTexts(texts) {
   return vectors;
 }
 
-/**
- * Builds a grounded prompt from the fused, retrieved chunks and calls
- * Gemini for the final answer. This is the "response generation" step
- * of the RAG pipeline (Chapter 3, Section B / C).
+/*
+  Builds a grounded prompt from the fused, retrieved chunks and calls
+  Gemini for the final answer.
  */
 export async function generateAnswer(query, contextChunks) {
   const model = genAI.getGenerativeModel({ model: CHAT_MODEL });
 
   const contextBlock = contextChunks
     .map(
-      (chunk, i) =>
-        `[Source ${i + 1} — ${chunk.documentTitle}]\n${chunk.text}`
+      (chunk, i) => `[Source ${i + 1} — ${chunk.documentTitle}]\n${chunk.text}`,
     )
     .join("\n\n");
 

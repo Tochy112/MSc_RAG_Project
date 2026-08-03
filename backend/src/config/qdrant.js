@@ -3,8 +3,8 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333";
 export const COLLECTION_NAME = process.env.QDRANT_COLLECTION || "tochy_chunks";
 
-// Gemini text-embedding-004 produces 768-dim vectors.
-const EMBEDDING_DIM = 768;
+// Gemini text-embedding-001 produces 3072-dim vectors.
+const EMBEDDING_DIM = 3072;
 
 export const qdrant = new QdrantClient({ url: QDRANT_URL });
 

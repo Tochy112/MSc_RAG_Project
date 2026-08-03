@@ -8,12 +8,7 @@ const TOP_K_DENSE = Number(process.env.TOP_K_DENSE || 8);
 const TOP_K_FUSED = Number(process.env.TOP_K_FUSED || 5);
 const RRF_K = Number(process.env.RRF_K || 60);
 
-/**
- * Reciprocal Rank Fusion.
- * score(doc) = sum over rankers of 1 / (RRF_K + rank)
- * where rank is 1-indexed. Docs missing from a ranker simply don't
- * contribute a term for it.
- */
+// Reciprocal Rank Fusion.
 function reciprocalRankFusion(rankedLists) {
   const fused = new Map(); // chunkId -> { score, ranks: {source: rank} }
 
@@ -33,16 +28,15 @@ function reciprocalRankFusion(rankedLists) {
     .sort((a, b) => b.score - a.score);
 }
 
-/**
- * Runs the full hybrid retrieval pipeline for a query:
- * 1. BM25 sparse search (in-memory, exact-term matching)
- * 2. Dense vector search via Qdrant (semantic similarity)
- * 3. Fuse both ranked lists with Reciprocal Rank Fusion
- * 4. Hydrate the top fused chunk ids with their text from MongoDB
- *
- * Returns the top-K fused chunks, each annotated with its rank in each
- * individual ranker and its final RRF score (useful both for prompt
- * construction and for later Precision@K/Recall@K/MRR evaluation).
+/*
+ Runs the full hybrid retrieval pipeline for a query:
+ 1. BM25 sparse search (in-memory, exact-term matching)
+ 2. Dense vector search via Qdrant (semantic similarity)
+ 3. Fuse both ranked lists with Reciprocal Rank Fusion
+ 4. Hydrate the top fused chunk ids with their text from MongoDB
+ 
+  Returns the top-K fused chunks, each annotated with its rank in each
+  individual ranker and its final RRF score.
  */
 export async function hybridRetrieve(query) {
   const queryEmbedding = await embedText(query);

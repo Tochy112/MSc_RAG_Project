@@ -1,7 +1,7 @@
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
-const CHUNK_SIZE = Number(process.env.CHUNK_SIZE || 800);
-const CHUNK_OVERLAP = Number(process.env.CHUNK_OVERLAP || 120);
+const CHUNK_SIZE = Number(process.env.CHUNK_SIZE || 512);
+const CHUNK_OVERLAP = Number(process.env.CHUNK_OVERLAP || 100);
 
 
 export async function chunkText(rawText) {

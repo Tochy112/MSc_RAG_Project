@@ -5,7 +5,7 @@ import { UserModel } from "../models/User.js";
 const JWT_SECRET = process.env.JWT_SECRET || "tochy_default_secret";
 const JWT_EXPIRATION = "8h";
 const DEFAULT_ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Admin123!";
+const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "password";
 
 export async function ensureDefaultAdmin() {
   if (await UserModel.exists({ role: "admin" })) {

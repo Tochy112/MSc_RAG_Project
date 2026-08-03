@@ -1,8 +1,8 @@
 import { qdrant, COLLECTION_NAME } from "../config/qdrant.js";
 
-/**
- * Upserts a single chunk's embedding into Qdrant, with enough payload to
- * reconstruct the chunk without a second Mongo round-trip if needed.
+/*
+ Upserts a single chunk's embedding into Qdrant, with enough payload to
+ reconstruct the chunk without a second Mongo round-trip if needed.
  */
 export async function upsertVector({ vectorId, embedding, chunkId, documentTitle, category, text }) {
   await qdrant.upsert(COLLECTION_NAME, {
@@ -16,9 +16,9 @@ export async function upsertVector({ vectorId, embedding, chunkId, documentTitle
   });
 }
 
-/**
- * Dense semantic search against Qdrant. Returns top-K
- * { vectorId, chunkId, score } sorted descending by cosine similarity.
+/*
+ Dense semantic search against Qdrant. Returns top-K
+ { vectorId, chunkId, score } sorted descending by cosine similarity.
  */
 export async function searchVectors(queryEmbedding, topK = 8) {
   const results = await qdrant.search(COLLECTION_NAME, {

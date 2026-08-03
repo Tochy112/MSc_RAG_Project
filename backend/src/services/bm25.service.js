@@ -1,5 +1,5 @@
-/**
-  Lightweight in-memory BM25 index.
+/*
+ Lightweight in-memory BM25 index.
  Rebuilt from MongoDB on server startup and incrementally updated whenever
  a new document is ingested.
 */
@@ -73,9 +73,9 @@ class BM25Index {
     return Math.log(1 + (N - df + 0.5) / (df + 0.5));
   }
 
-  /**
-   * Returns top-K { chunkId, score } sorted descending by BM25 score.
-   */
+  
+  // Returns top-K { chunkId, score } sorted descending by BM25 score.
+   
   search(query, topK = 8) {
     const queryTerms = [...new Set(tokenize(query))];
     const scores = new Map();
