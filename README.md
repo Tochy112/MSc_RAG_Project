@@ -54,12 +54,30 @@ lunozart-rag-assistant/
 4. Every query + retrieved chunks + answer is logged to MongoDB, which is the
    raw data your Precision@K / Recall@K / MRR evaluation script will read from.
 
+## Retriever Ablation
+
+Run the same ground-truth query set through BM25-only, dense-only, and
+hybrid+RRF at the same final K:
+
+```
+docker compose up -d --build backend
+```
+
+```
+docker compose exec backend npm run eval:retrieval -- --input=eval/ground-truth.example.json --k=5
+```
+
+The input file is a JSON array of `{ "query": "...", "relevantChunkIds": [...] }`.
+
+If relevant chunk ids have already been labelled in `ChatLog.evaluation`, run:
+
+```
+docker compose exec backend npm run eval:retrieval -- --source=chatlogs --k=5
+```
+
 ## Next steps for the dissertation
 
 - Populate the knowledge base with the Lunozart-derived pricing sheets,
   quotation templates, and measurement guides (see companion request).
 - Build a ground-truth query set (`query -> relevant chunk ids`) for retrieval
   metrics.
-- Add a `/api/evaluate` endpoint or standalone script that runs the ground
-  truth set against BM25-only, dense-only, and hybrid retrieval to produce
-  comparative Precision@K/Recall@K/MRR numbers for Chapter 4.

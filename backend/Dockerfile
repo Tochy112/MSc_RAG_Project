@@ -6,6 +6,7 @@ COPY package.json package-lock.json* ./
 RUN npm pkg delete scripts.prepare && npm ci --omit=dev
 
 COPY src ./src
+COPY eval ./eval
 
 ENV PORT=4000
 EXPOSE 4000
