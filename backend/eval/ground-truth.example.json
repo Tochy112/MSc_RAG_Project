@@ -1,12 +1,6 @@
 [
   {
-    "query": " I'm working on a curtain project with three single windows, each requiring a single-drop curtain with a 5-foot drop height. The fabric costs ₦2,200 per yard, and I'm using curtain tape instead of rings at ₦300 per yard. I'll also need two curtain rods at ₦4,000 each, and installation isn't included. Can you walk me through the complete cost breakdown, including the materials and the total cost?",
-    "relevantChunkIds": [
-      "6a75cfe1a5e87abe5059343e", 
-      "6a75cfe1a5e87abe5059343c", 
-      "6a75cfe0a5e87abe5059343a",
-      "6a75cffba5e87abe50593464",
-      "6a75cfe0a5e87abe50593438"
-    ]
+    "query": "",
+    "relevantChunkIds": []
   }
 ]

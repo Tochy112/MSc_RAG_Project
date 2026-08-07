@@ -1,13 +1,12 @@
 # Interior Design RAG Assistant
 
-A domain-specific Retrieval-Augmented Generation assistant for interior design
-knowledge management, built for the MSc dissertation "Design and Evaluation of
+A domain-specific Retrieval-Augmented Generation assistant knowledge management, built for my MSc dissertation "Design and Evaluation of
 a Retrieval-Augmented AI Assistant for Knowledge Management and Technical
 Workflows: A Case Study in Interior Design".
 
 ## Architecture
 
-- **Frontend**: React (Vite) — chat interface + document upload
+- **Frontend**: React (Vite)
 - **Backend**: Node.js / Express + LangChain orchestration
 - **Retrieval**: Hybrid — BM25 (sparse, in-memory) + Qdrant (dense vector search),
   fused with Reciprocal Rank Fusion (RRF)
@@ -20,10 +19,10 @@ Workflows: A Case Study in Interior Design".
 ## Project layout
 
 ```
-lunozart-rag-assistant/
+tochy-rag-assistant/
 ├── docker-compose.yml
-├── backend/          # Express API + retrieval pipeline
-└── frontend/          # React chat UI
+├── backend/          
+└── frontend/         
 ```
 
 ## Running it
@@ -74,10 +73,3 @@ If relevant chunk ids have already been labelled in `ChatLog.evaluation`, run:
 ```
 docker compose exec backend npm run eval:retrieval -- --source=chatlogs --k=5
 ```
-
-## Next steps for the dissertation
-
-- Populate the knowledge base with the Lunozart-derived pricing sheets,
-  quotation templates, and measurement guides (see companion request).
-- Build a ground-truth query set (`query -> relevant chunk ids`) for retrieval
-  metrics.
