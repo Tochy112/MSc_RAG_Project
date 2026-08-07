@@ -65,6 +65,14 @@ export async function askQuestion(query) {
   return handleResponse(res, "Query failed");
 }
 
+export async function getChatHistory(userId) {
+  const path = userId ? `/chat/history/${userId}` : "/chat/history";
+  const res = await fetch(`${BASE}${path}`, {
+    headers: authHeaders(),
+  });
+  return handleResponse(res, "Failed to load chat history");
+}
+
 export async function getAdminStats() {
   const res = await fetch(`${BASE}/admin/stats`, {
     headers: authHeaders(),

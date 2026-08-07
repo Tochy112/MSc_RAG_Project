@@ -5,7 +5,6 @@ const CATEGORIES = [
   { value: "quotation_template", label: "Quotation template" },
   { value: "measurement_guide", label: "Measurement guide" },
   { value: "product_catalogue", label: "Product catalogue" },
-  { value: "operational_procedure", label: "Operational procedure" },
   { value: "other", label: "Other" },
 ];
 

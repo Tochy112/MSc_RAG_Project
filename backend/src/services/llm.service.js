@@ -2,13 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-const CHAT_MODEL = process.env.GEMINI_CHAT_MODEL || "gemini-1.5-flash";
+const CHAT_MODEL = process.env.GEMINI_CHAT_MODEL || "gemini-3.6-flash";
 const EMBEDDING_MODEL =
-  process.env.GEMINI_EMBEDDING_MODEL || "text-embedding-001";
+  process.env.GEMINI_EMBEDDING_MODEL || "gemini-embedding-001";
 
 /*
   Embeds a single piece of text into a dense vector using Gemini's
-  text-embedding-001 model (3,072 dimensions).
+  gemini-embedding-001 model (3,072 dimensions).
  */
 export async function embedText(text) {
   const model = genAI.getGenerativeModel({ model: EMBEDDING_MODEL });
@@ -51,7 +51,7 @@ ${contextBlock}
 QUESTION:
 ${query}
 
-Answer concisely and, where relevant, cite which source(s) you used (e.g. "Source 2").`;
+Answer concisely and cite the document title used.`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();

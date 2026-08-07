@@ -11,8 +11,8 @@ Workflows: A Case Study in Interior Design".
 - **Backend**: Node.js / Express + LangChain orchestration
 - **Retrieval**: Hybrid — BM25 (sparse, in-memory) + Qdrant (dense vector search),
   fused with Reciprocal Rank Fusion (RRF)
-- **LLM + Embeddings**: Google Gemini (`gemini-1.5-flash` for generation,
-  `text-embedding-004` for embeddings)
+- **LLM + Embeddings**: Google Gemini (`gemini-3.6-flash` for generation,
+  `gemini-embedding-001` for embeddings)
 - **Chunking**: LangChain `RecursiveCharacterTextSplitter`
 - **App data store**: MongoDB (documents, chunks, chat/evaluation logs)
 - **Vector store**: Qdrant
@@ -45,7 +45,7 @@ lunozart-rag-assistant/
 1. Upload a document (pricing sheet, quotation template, measurement guide, etc.)
    via the frontend or `POST /api/documents/upload`.
 2. Backend chunks it (`RecursiveCharacterTextSplitter`), embeds each chunk
-   (Gemini `text-embedding-004`), stores vectors in Qdrant, and indexes the raw
+   (Gemini `gemini-embedding-001`), stores vectors in Qdrant, and indexes the raw
    text in an in-memory BM25 index (rebuilt from Mongo on startup).
 3. A chat query hits `POST /api/chat` → backend runs BM25 search and Qdrant
    dense search in parallel → fuses rankings with Reciprocal Rank Fusion (RRF)

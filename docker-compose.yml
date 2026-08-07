@@ -31,20 +31,25 @@ services:
       - ./backend/src:/app/src
       - ./backend/package.json:/app/package.json
     command: npm run dev
+    env_file:
+      - .env
     environment:
-      - PORT=4000
-      - MONGO_URI=mongodb://mongodb:27017/tochy_rag
-      - QDRANT_URL=http://qdrant:6333
-      - QDRANT_COLLECTION=${QDRANT_COLLECTION:-tochy_chunks}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - GEMINI_CHAT_MODEL=${GEMINI_CHAT_MODEL:-gemini-1.5-flash}
-      - GEMINI_EMBEDDING_MODEL=${GEMINI_EMBEDDING_MODEL:-text-embedding-004}
-      - CHUNK_SIZE=${CHUNK_SIZE:-800}
-      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-120}
-      - TOP_K_DENSE=${TOP_K_DENSE:-8}
-      - TOP_K_BM25=${TOP_K_BM25:-8}
-      - TOP_K_FUSED=${TOP_K_FUSED:-5}
-      - RRF_K=${RRF_K:-60}
+      PORT: ${PORT:-4000}
+      MONGO_URI: ${MONGO_URI}
+      QDRANT_URL: ${QDRANT_URL}
+      QDRANT_COLLECTION: ${QDRANT_COLLECTION}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_CHAT_MODEL: ${GEMINI_CHAT_MODEL}
+      GEMINI_EMBEDDING_MODEL: ${GEMINI_EMBEDDING_MODEL}
+      CHUNK_SIZE: ${CHUNK_SIZE}
+      CHUNK_OVERLAP: ${CHUNK_OVERLAP}
+      TOP_K_DENSE: ${TOP_K_DENSE}
+      TOP_K_BM25: ${TOP_K_BM25}
+      TOP_K_FUSED: ${TOP_K_FUSED}
+      RRF_K: ${RRF_K}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     restart: unless-stopped
 
   frontend:

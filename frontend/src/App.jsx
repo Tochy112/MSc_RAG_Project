@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar.jsx";
 import ChatWindow from "./components/ChatWindow.jsx";
 import AuthForm from "./components/AuthForm.jsx";
@@ -8,6 +8,7 @@ import {
   uploadDocument,
   deleteDocument,
   askQuestion,
+  getChatHistory,
   getAdminStats,
 } from "./api/client.js";
 import { login, signup, getStoredAuth, clearAuthData, setAuthData } from "./api/auth.js";
@@ -62,9 +63,13 @@ export default function App() {
     await refreshStats();
   }
 
-  async function handleAsk(query) {
+  const handleAsk = useCallback(async function handleAsk(query) {
     return askQuestion(query);
-  }
+  }, []);
+
+  const handleLoadChatHistory = useCallback(async function handleLoadChatHistory() {
+    return getChatHistory();
+  }, []);
 
   async function handleAuthSubmit(credentials) {
     setAuthError("");
@@ -124,7 +129,7 @@ export default function App() {
       ) : (
         <div className="staff-view">
           <div className="staff-chat">
-            <ChatWindow onAsk={handleAsk} />
+            <ChatWindow onAsk={handleAsk} onLoadHistory={handleLoadChatHistory} />
           </div>
         </div>
       )}

@@ -647,6 +647,43 @@ body {
   border-radius: var(--radius);
   font-size: 14.5px;
   line-height: 1.55;
+}
+
+.msg-markdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.msg-heading {
+  margin: 4px 0 2px;
+  color: var(--navy-900);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.msg-paragraph {
+  margin: 0;
+}
+
+.msg-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.msg-list li + li {
+  margin-top: 5px;
+}
+
+.msg-divider {
+  width: 100%;
+  margin: 4px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.msg-row.user .msg-markdown {
   white-space: pre-wrap;
 }
 
@@ -654,6 +691,10 @@ body {
   background: var(--navy-900);
   color: #f4f1ea;
   border-top-right-radius: 3px;
+}
+
+.msg-row.user .msg-heading {
+  color: #f4f1ea;
 }
 
 .msg-row.assistant .msg-bubble {

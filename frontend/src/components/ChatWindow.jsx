@@ -1,11 +1,60 @@
 import React, { useEffect, useRef, useState } from "react";
 import MessageBubble from "./MessageBubble.jsx";
 
-export default function ChatWindow({ onAsk }) {
+function logsToMessages(logs) {
+  return [...logs]
+    .reverse()
+    .flatMap((log) => [
+      { role: "user", content: log.query },
+      {
+        role: "assistant",
+        content: log.answer,
+        sources: log.retrievedChunks || [],
+      },
+    ]);
+}
+
+export default function ChatWindow({ onAsk, onLoadHistory }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(Boolean(onLoadHistory));
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadHistory() {
+      if (!onLoadHistory) return;
+
+      setLoadingHistory(true);
+      try {
+        const logs = await onLoadHistory();
+        if (active) {
+          setMessages(logsToMessages(logs));
+        }
+      } catch (err) {
+        if (active) {
+          setMessages([
+            {
+              role: "assistant",
+              content: `Unable to load chat history: ${err.message}`,
+            },
+          ]);
+        }
+      } finally {
+        if (active) {
+          setLoadingHistory(false);
+        }
+      }
+    }
+
+    loadHistory();
+
+    return () => {
+      active = false;
+    };
+  }, [onLoadHistory]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -52,7 +101,12 @@ export default function ChatWindow({ onAsk }) {
   return (
     <div className="chat-column">
       <div className="messages" ref={scrollRef}>
-        {messages.length === 0 && (
+        {loadingHistory && messages.length === 0 && (
+          <div className="empty-state">
+            <div className="signature">Loading chat history...</div>
+          </div>
+        )}
+        {!loadingHistory && messages.length === 0 && (
           <div className="empty-state">
             <div className="signature">Ask tochyAI.</div>
             <p>
