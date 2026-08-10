@@ -1,6 +1,6 @@
 [
   {
-    "query": "",
-    "relevantChunkIds": []
+    "query": "A customer returns to pay the outstanding balance on a previous part-payment sale. What should the staff member do?",
+    "relevantChunkIds": ["6a75cffda5e87abe5059346e"]
   }
 ]
