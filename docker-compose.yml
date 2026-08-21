@@ -27,7 +27,6 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      # Bind-mount source only (node_modules stays the one built into the image)
       - ./backend/src:/app/src
       - ./backend/eval:/app/eval
       - ./backend/package.json:/app/package.json

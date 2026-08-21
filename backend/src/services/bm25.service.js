@@ -1,9 +1,3 @@
-/*
- Lightweight in-memory BM25 index.
- Rebuilt from MongoDB on server startup and incrementally updated whenever
- a new document is ingested.
-*/
-
 const K1 = 1.5;
 const B = 0.75;
 
@@ -17,9 +11,7 @@ function tokenize(text) {
 
 class BM25Index {
   constructor() {
-    // chunkId -> { tokens, length }
     this.docs = new Map();
-    // term -> Set(chunkId)
     this.postings = new Map();
     this.avgDocLength = 0;
   }
@@ -75,7 +67,6 @@ class BM25Index {
 
   
   // Returns top-K { chunkId, score } sorted descending by BM25 score.
-   
   search(query, topK = 8) {
     const queryTerms = [...new Set(tokenize(query))];
     const scores = new Map();

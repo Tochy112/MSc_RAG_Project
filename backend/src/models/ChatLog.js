@@ -18,7 +18,6 @@ const chatLogSchema = new mongoose.Schema(
     query: { type: String, required: true },
     answer: { type: String, required: true },
     retrievedChunks: [retrievedChunkSchema],
-    // Free-slot for evaluation harness (Precision@K/Recall@K/MRR)
     evaluation: {
       relevantChunkIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chunk" }],
       precisionAtK: Number,

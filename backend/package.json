@@ -8,6 +8,7 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "eval:retrieval": "node src/scripts/retrieverAblation.js",
+    "eval:standalone": "node src/scripts/standaloneLlmEval.js",
     "prepare": "husky",
     "lint-staged": "lint-staged"
   },

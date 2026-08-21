@@ -1,6 +1,87 @@
 [
   {
+    "query": "How many rings per curtain drop",
+    "relevantChunkIds": [
+      "6a7b962356b4feb715ef9f86"
+    ]
+  },
+  {
+    "query": "A room measures 10ft by 14ft. Using the standard 10% wastage allowance and an agreed carpet price of N4,000 per square metre, what's the carpet cost?",
+    "relevantChunkIds": [
+      "6a7b962056b4feb715ef9f76",
+      "6a7b962056b4feb715ef9f78",
+      "6a7b962156b4feb715ef9f7a"
+    ]
+  },
+  {
+    "query": "What's the reference price of the gold rug",
+    "relevantChunkIds": [
+      "6a7b967656b4feb715ef9fe0",
+      "6a7b965056b4feb715ef9fbe"
+    ]
+  },
+  {
+    "query": "What's the discount on the sofa set in the part-payment example",
+    "relevantChunkIds": [
+      "6a7b965156b4feb715ef9fc4"
+    ]
+  },
+  {
+    "query": "A customer wants the gold rug but is only paying N60,000 today by transfer — can I do that, and what do I need to record",
+    "relevantChunkIds": [
+      "6a7b967656b4feb715ef9fe0",
+      "6a7b964f56b4feb715ef9fb8",
+      "6a7b962556b4feb715ef9f90"
+    ]
+  },
+  {
+    "query": "I'm working on a curtain project with three single windows, each requiring a single-drop curtain with a 5-foot drop height. The fabric costs ₦2,200 per yard, and I'm using curtain tape instead of rings at ₦300 per yard. I'll also need two curtain rods at ₦4,000 each, and installation isn't included. Can you walk me through the complete cost breakdown, including the materials and the total cost?",
+    "relevantChunkIds": [
+      "6a7b962256b4feb715ef9f80",
+      "6a7b962356b4feb715ef9f82",
+      "6a7b962356b4feb715ef9f84",
+      "6a7b962356b4feb715ef9f86"
+    ]
+  },
+  {
+    "query": "A customer wants the 3-seater recliner sofa but negotiates down to N240,000, paying N150,000 today by POS. What should the receipt show, including the discount and balance?",
+    "relevantChunkIds": [
+      "6a7b967656b4feb715ef9fe0",
+      "6a7b964f56b4feb715ef9fb6",
+      "6a7b964f56b4feb715ef9fb8",
+      "6a7b962556b4feb715ef9f90"
+    ]
+  },
+  {
+    "query": "how many type of curtains is there",
+    "relevantChunkIds": [
+      "6a7b962256b4feb715ef9f80"
+    ]
+  },
+  {
+    "query": "can a customer pay with POS",
+    "relevantChunkIds": [
+      "6a7b962556b4feb715ef9f90"
+    ]
+  },
+  {
     "query": "A customer returns to pay the outstanding balance on a previous part-payment sale. What should the staff member do?",
-    "relevantChunkIds": ["6a75cffda5e87abe5059346e"]
+    "relevantChunkIds": [
+      "6a7b962556b4feb715ef9f92",
+      "6a7b965156b4feb715ef9fc6"
+    ]
+  },
+  {
+    "query": "What happens if a staff member tries to sell more finished goods than are currently in stock?",
+    "relevantChunkIds": [
+      "6a7b962656b4feb715ef9f96"
+    ]
+  },
+  {
+    "query": "How long is a carpet or curtain invoice valid before the quoted price is no longer guaranteed?",
+    "relevantChunkIds": [
+      "6a7b964e56b4feb715ef9fb4",
+      "6a7b965056b4feb715ef9fbc"
+    ]
   }
 ]

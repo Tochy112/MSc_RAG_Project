@@ -19,7 +19,7 @@ export async function embedText(text) {
 /*
   Embeds many chunks. Done sequentially in small batches to stay well
   within free-tier rate limits. 
-  Swap for embedBatch API after upgrade.
+  Swap for embedBatch API when on paid tier.
 */
 export async function embedTexts(texts) {
   const vectors = [];
