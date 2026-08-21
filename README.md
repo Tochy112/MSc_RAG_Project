@@ -1,4 +1,4 @@
-# Interior Design RAG Assistant
+# RAG Assistant
 
 A domain-specific Retrieval-Augmented Generation assistant knowledge management, built for my MSc dissertation "Design and Evaluation of
 a Retrieval-Augmented AI Assistant for Knowledge Management and Technical
