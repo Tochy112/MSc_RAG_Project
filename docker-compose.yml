@@ -26,30 +26,21 @@ services:
       - qdrant
     ports:
       - "4000:4000"
-    volumes:
-      - ./backend/src:/app/src
-      - ./backend/eval:/app/eval
-      - ./backend/package.json:/app/package.json
     command: npm run dev
     env_file:
       - .env
-    environment:
-      PORT: ${PORT:-4000}
-      MONGO_URI: ${MONGO_URI}
-      QDRANT_URL: ${QDRANT_URL}
-      QDRANT_COLLECTION: ${QDRANT_COLLECTION}
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
-      GEMINI_CHAT_MODEL: ${GEMINI_CHAT_MODEL}
-      GEMINI_EMBEDDING_MODEL: ${GEMINI_EMBEDDING_MODEL}
-      CHUNK_SIZE: ${CHUNK_SIZE}
-      CHUNK_OVERLAP: ${CHUNK_OVERLAP}
-      TOP_K_DENSE: ${TOP_K_DENSE}
-      TOP_K_BM25: ${TOP_K_BM25}
-      TOP_K_FUSED: ${TOP_K_FUSED}
-      RRF_K: ${RRF_K}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_USERNAME: ${ADMIN_USERNAME}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+        - action: sync
+          path: ./backend/eval
+          target: /app/eval
+        - action: rebuild
+          path: ./backend/package.json
+        - action: rebuild
+          path: ./backend/package-lock.json
     restart: unless-stopped
 
   frontend:
@@ -59,12 +50,23 @@ services:
       - backend
     ports:
       - "5173:5173"
-    volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/index.html:/app/index.html
-      - ./frontend/vite.config.js:/app/vite.config.js
     environment:
       - VITE_BACKEND_URL=http://backend:4000
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: sync
+          path: ./frontend/index.html
+          target: /app/index.html
+        - action: sync+restart
+          path: ./frontend/vite.config.js
+          target: /app/vite.config.js
+        - action: rebuild
+          path: ./frontend/package.json
+        - action: rebuild
+          path: ./frontend/package-lock.json
     restart: unless-stopped
 
 volumes:

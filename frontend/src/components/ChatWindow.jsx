@@ -122,7 +122,7 @@ export default function ChatWindow({ onAsk, onLoadHistory }) {
 
       <form className="composer" onSubmit={handleSend}>
         <input
-          placeholder="Ask about pricing, measurements, quotation logic…"
+          placeholder="Type your question here..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />

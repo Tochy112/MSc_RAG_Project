@@ -378,12 +378,12 @@ body {
 .staff-chat {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 24px;
   min-height: 0;
 }
 
 .staff-view {
   flex: 1;
+  padding: 24px;
 }
 
 @media (max-width: 1024px) {
@@ -404,9 +404,12 @@ body {
 
 @media (max-width: 720px) {
   .admin-view,
-  .staff-view,
-  .staff-chat {
+  .staff-view {
     padding: 14px;
+  }
+
+  .staff-chat {
+    padding: 0;
   }
 
   .topbar {
@@ -783,6 +786,43 @@ body {
 .composer button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .staff-view {
+    padding: 8px;
+  }
+
+  .messages {
+    padding: 16px 10px;
+    gap: 12px;
+  }
+
+  .msg-row {
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .msg-bubble {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .composer {
+    padding: 10px 10px 14px;
+    gap: 8px;
+  }
+
+  .composer input {
+    min-width: 0;
+    padding: 11px 13px;
+  }
+
+  /* .composer button {
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+  } */
 }
 
 .pending-dot {
